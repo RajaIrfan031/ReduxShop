@@ -1,22 +1,32 @@
 import React from "react";
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+
 
 const NavBar = ()=>{
+
+  const items = useSelector(state => state.cart);
+
     return(
-    <Navbar bg="light" expand="lg">
-      <Container>
-        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-                <Nav.Link href="#home">Home</Nav.Link>
-                <Nav.Link href="#link">Link</Nav.Link>
-            </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+      <>
+      <div className="w-screen h-16 bg-slate-500">
+        <div className="flex flex-row pl-4 p-2">
+          <div className="flex w-full h-full">
+          <div className="hover:cursor-pointer">
+              <Link to='/' className="">
+                <h1 className="text-3xl">Shopity</h1>
+              </Link>
+            </div>
+            <div className="bg-indigo-500 p-2 rounded-lg ml-4 hover:cursor-pointer">
+              <Link to='/cart' className="">Cart</Link>
+            </div>
+          </div>
+          <div className="flex w-full h-full flex-end">
+            My Cart: {items.length}
+          </div>
+        </div>
+      </div>
+      </>
     );
 }
 

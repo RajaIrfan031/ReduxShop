@@ -1,7 +1,10 @@
 import React, {useState, useEffect} from 'react';
+import { useDispatch } from 'react-redux';
+import {add} from '../redux/cartSlice';
 
 const Product = ()=>{
 
+    const dispatch = useDispatch();
     const [products, setProducts] = useState([]);
 
     useEffect(()=>{
@@ -9,6 +12,10 @@ const Product = ()=>{
         .then(data=> data.json())
         .then(results=>setProducts(results))
     }, []);
+
+    const addToCart =(product)=>{
+        dispatch(add(product));
+    }
 
     return(
         <>
@@ -21,7 +28,12 @@ const Product = ()=>{
                     <img src={product.image} alt="logo" className='w-[200px] h-[240px]'/>
                     <h1 className='font-bold my-4'>{product.title}</h1>
                     <p className='text-sm my-2'>{product.price}</p>
-                    <button className='p-2 border bg-indigo-700 rounded-lg hover:cursor-pointer text-slate-300 font-semibold hover:bg-indigo-500'>Add to Cart</button>
+                    <button
+                    className='p-2 border bg-indigo-700 rounded-lg hover:cursor-pointer text-slate-300 font-semibold hover:bg-indigo-500'
+                    onClick={()=>{addToCart(product)}}
+                    >
+                        Add to Cart
+                    </button>
                 </div>
                 )
         })
