@@ -1,11 +1,10 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React from "react"; 
 import { Link } from "react-router-dom";
-
+import { useSelector } from "react-redux";
 
 const NavBar = ()=>{
-
-  const items = useSelector(state => state.cart);
+ 
+  const items = useSelector(state=>state.cart);
 
     return(
       <>

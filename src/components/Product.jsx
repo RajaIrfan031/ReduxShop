@@ -1,22 +1,29 @@
-import React, {useState, useEffect} from 'react';
-import { useDispatch } from 'react-redux';
-import {add} from '../redux/cartSlice';
+import React, {useEffect} from 'react'; 
+import { useDispatch, useSelector } from 'react-redux';
+import { add } from '../redux/cartSlice';
+import { getProducts } from '../redux/productsSlice';
+import StatusCode from '../utils/StatusCode';
 
 const Product = ()=>{
 
-    const dispatch = useDispatch();
-    const [products, setProducts] = useState([]);
+    const dispatch = useDispatch(); 
+    const {data: products, status} = useSelector(state => state.products);
 
     useEffect(()=>{
-        fetch('https://fakestoreapi.com/products')
-        .then(data=> data.json())
-        .then(results=>setProducts(results))
+        dispatch(getProducts());
     }, []);
-
-    const addToCart =(product)=>{
-        dispatch(add(product));
+ 
+    const addToCart=(product)=>{
+        dispatch(add(product))
     }
 
+    if(status === StatusCode.LOADING){
+        return <p>Loading...</p>
+    }
+
+    if(status === StatusCode.ERROR){
+        return <p>Some error occured. Could not load.</p>
+    }
     return(
         <>
         <div className='flex w-full h-full p-20'>

@@ -1,15 +1,19 @@
-import React from 'react';
+import React from 'react'; 
 import { useSelector, useDispatch } from 'react-redux';
-import { remove } from '../redux/cartSlice';
+import {remove, clearCart} from '../redux/cartSlice';
 
 const Cart = ()=>{
-
-    const dispatch = useDispatch();
+ 
     const cartItems = useSelector(state => state.cart);
-    const removeItem =(id)=>{
-        dispatch(remove(id))
+    const dispatch = useDispatch();
+    const removeFromCart = (id) =>{
+        dispatch(remove(id));
     }
-    
+
+    const clearCartItems = () =>{ 
+        dispatch(clearCart(""));
+    }
+
     return(
         <>
         <div className='flex flex-row w-full flex-wrap'>
@@ -22,7 +26,7 @@ const Cart = ()=>{
                     <p className='text-sm my-2'>{cartItems.price}</p>
                     <button
                     className='p-2 border bg-red-700 rounded-lg hover:cursor-pointer text-slate-300 font-semibold hover:bg-red-500'
-                    onClick={()=>removeItem(cartItems.id)}
+                    onClick={()=> {removeFromCart(cartItems.id)}}
                     >
                         Remove
                     </button>
@@ -30,6 +34,14 @@ const Cart = ()=>{
                 )
         })
         }
+            <div className='flex w-full items-center justify-center'>
+            <button
+            className='p-2 border bg-red-700 rounded-lg hover:cursor-pointer text-slate-100 font-semibold hover:bg-red-500'
+            onClick={()=> {clearCartItems()}}
+            >
+                Clear Cart
+            </button>
+            </div>
         </div>
         </>
     )
